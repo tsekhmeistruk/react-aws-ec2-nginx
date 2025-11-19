@@ -8,7 +8,7 @@ import { BasePage } from '../base-page';
 export class HomePage extends BasePage {
   // Selectors
   readonly appLogoSelector: string = '.App-logo';
-  readonly appHeaderSelector: string = '.App-header';
+  readonly appHeaderSelector: string = 'header h1';
   readonly appLinkSelector: string = '.App-link';
 
   /**
