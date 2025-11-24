@@ -18,7 +18,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:dev": "playwright test --config=config/environments/dev.config.ts",
+    "test:qa": "playwright test --config=config/environments/qa.config.ts",
+    "test:staging": "playwright test --config=config/environments/staging.config.ts",
+    "test:prod": "playwright test --config=config/environments/production.config.ts",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
