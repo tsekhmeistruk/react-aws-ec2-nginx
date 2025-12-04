@@ -3,6 +3,42 @@
 Setting up a web application on an AWS EC2 instance involves several steps, from launching the server to configuring Nginx to serve your application. In this guide, we’ll walk through each step to deploy a ReactJS application on an AWS EC2 Ubuntu server.
 ![1i (3)](https://github.com/codewithmuh/react-aws-ec2-nginx/assets/51082957/19ac2fc1-648f-4bed-9835-4bb653c0904a)
 
+## 🎭 Playwright Test Automation
+
+This project includes a comprehensive Playwright test automation framework with:
+- ✅ End-to-end (E2E) tests across Chromium, Firefox, and WebKit
+- ✅ Unit tests for components and utilities
+- ✅ Multi-environment support (Dev, Staging)
+- ✅ CI/CD integration with GitHub Actions
+- ✅ Automated test reporting
+
+### Quick Start with Tests
+
+```bash
+# Install dependencies
+npm install
+npx playwright install
+
+# Run all tests
+npm run test:all
+
+# Run e2e tests only
+npm run test:e2e
+
+# Run unit tests only
+npm run test:unit
+
+# View test report
+npm run test:report
+```
+
+📚 **Test Documentation:**
+- [Quick Start Guide](QUICKSTART.md) - Get started in 5 minutes
+- [Full Setup Guide](PLAYWRIGHT_SETUP.md) - Comprehensive documentation
+- [Test Documentation](tests/README.md) - Test structure and details
+
+---
+
 ## Table of Contents:
 
 1. [Launching an AWS EC2 Ubuntu Server](#launching-an-aws-ec2-ubuntu-server)
