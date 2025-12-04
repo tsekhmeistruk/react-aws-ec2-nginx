@@ -1,0 +1,41 @@
+{
+  "name": "react-aws-ec2-nginx-tests",
+  "version": "1.0.0",
+  "description": "Playwright test automation for CodeWithMuh React application",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:staging": "playwright test --config=playwright.staging.config.ts",
+    "test:prod": "playwright test --config=playwright.prod.config.ts",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen http://localhost:3000",
+    "lint": "eslint tests/**/*.ts",
+    "lint:fix": "eslint tests/**/*.ts --fix",
+    "format": "prettier --write \"tests/**/*.ts\"",
+    "format:check": "prettier --check \"tests/**/*.ts\"",
+    "install:browsers": "playwright install"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "e2e",
+    "automation",
+    "react"
+  ],
+  "author": "CodeWithMuh",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0"
+  }
+}
