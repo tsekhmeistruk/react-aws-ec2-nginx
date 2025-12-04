@@ -13,12 +13,24 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@playwright/test": "^1.40.0",
     "prettier": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:unit": "react-scripts test --testPathPattern=tests/unit",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:chromium": "playwright test --project=chromium-dev",
+    "test:e2e:firefox": "playwright test --project=firefox-dev",
+    "test:e2e:webkit": "playwright test --project=webkit-dev",
+    "test:e2e:staging": "playwright test --project=chromium-staging --project=firefox-staging --project=webkit-staging",
+    "test:report": "playwright show-report",
+    "test:all": "npm run test:unit && npm run test:e2e",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
