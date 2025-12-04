@@ -1,0 +1,274 @@
+---
+test_automation_specification:
+  project:
+    name: "CodeWithMuh React Application Test Automation"
+    repository: "https://github.com/tsekhmeistruk/react-aws-ec2-nginx"
+    application_type: "React SPA"
+    framework: "React 18.2.0"
+    test_framework: "Playwright"
+    created_date: "2024-12-19"
+    branch: "test-automation-implementation-2024-12-19-14-30"
+
+  configuration:
+    execution_strategy:
+      type: "Parallel"
+      workers: 4
+      retries: 3
+    
+    browsers:
+      - name: "Chromium"
+        enabled: true
+      - name: "Firefox"
+        enabled: true
+      - name: "WebKit"
+        enabled: true
+    
+    bdd_approach:
+      enabled: false
+      type: "Standard Playwright"
+    
+    test_data_management:
+      - "JSON data files"
+      - "Test data builder"
+    
+    reporting:
+      - "Playwright HTML Report"
+    
+    reliability_features:
+      - "Auto-retry (3 attempts)"
+    
+    environments:
+      - name: "Local"
+        base_url: "http://localhost:3000"
+        config_file: "playwright.config.ts"
+      - name: "Staging"
+        base_url: "https://staging.codewithmuh.com"
+        config_file: "playwright.staging.config.ts"
+      - name: "Production"
+        base_url: "https://codewithmuh.com"
+        config_file: "playwright.prod.config.ts"
+    
+    ci_cd:
+      level: "Basic"
+      workflows:
+        - name: "test-execution-pr.yaml"
+          trigger: "Pull Request"
+          scope: "All tests, all browsers"
+        - name: "test-execution-main.yaml"
+          trigger: "Push to main"
+          scope: "Full test suite"
+
+  test_coverage:
+    total_tests: 23
+    
+    test_suites:
+      - name: "Home Page - Layout and Content"
+        file: "tests/e2e/home/home-page.spec.ts"
+        test_count: 10
+        coverage:
+          - "Page title validation"
+          - "Header content"
+          - "React logo animation"
+          - "YouTube video embed"
+          - "Video description"
+          - "LinkedIn game section"
+          - "Action buttons"
+          - "Footer copyright"
+          - "All elements visibility"
+          - "Button count validation"
+      
+      - name: "LinkedIn Connection Checker - Interactions"
+        file: "tests/e2e/interactions/linkedin-checker.spec.ts"
+        test_count: 6
+        coverage:
+          - "Result display after click"
+          - "Connected/not connected messages"
+          - "LinkedIn profile link display"
+          - "Multiple checks support"
+          - "Button enabled state"
+          - "Result element validation"
+      
+      - name: "External Links Navigation"
+        file: "tests/e2e/navigation/external-links.spec.ts"
+        test_count: 7
+        coverage:
+          - "YouTube subscription link"
+          - "GitHub repository link"
+          - "Original page preservation"
+          - "Target attribute validation"
+          - "Page state maintenance"
+          - "Button visibility and state"
+          - "Multiple sequential links"
+
+  page_objects:
+    - name: "BasePage"
+      file: "tests/page-objects/base-page.ts"
+      description: "Base page with common functionality"
+      methods:
+        - "goto(path)"
+        - "waitForPageLoad()"
+        - "takeScreenshot(name)"
+        - "getTitle()"
+        - "getURL()"
+        - "waitForElement(selector)"
+        - "isElementVisible(selector)"
+        - "reload()"
+    
+    - name: "HomePage"
+      file: "tests/page-objects/pages/home-page.ts"
+      description: "Home page with all interactive elements"
+      locators:
+        - "header"
+        - "headerTitle"
+        - "reactLogo"
+        - "youtubeIframe"
+        - "videoDescription"
+        - "linkedInGameTitle"
+        - "linkedInGameDescription"
+        - "checkConnectionButton"
+        - "connectionResult"
+        - "subscribeButton"
+        - "githubRepoButton"
+        - "footer"
+        - "footerCopyright"
+      methods:
+        - "navigateToHome()"
+        - "getHeaderTitle()"
+        - "isReactLogoVisible()"
+        - "isYouTubeVideoEmbedded()"
+        - "getYouTubeVideoURL()"
+        - "clickCheckConnection()"
+        - "getConnectionResult()"
+        - "getConnectionResultHTML()"
+        - "clickSubscribeButton()"
+        - "clickGithubRepoButton()"
+        - "getFooterCopyright()"
+        - "areAllMainElementsVisible()"
+        - "getAllButtonTexts()"
+
+  helpers:
+    - name: "AssertionHelpers"
+      file: "tests/helpers/assertion-helpers.ts"
+      methods:
+        - "assertElementContainsText()"
+        - "assertElementHasExactText()"
+        - "assertElementIsVisible()"
+        - "assertElementIsHidden()"
+        - "assertElementIsEnabled()"
+        - "assertElementHasAttribute()"
+        - "assertElementAttributeContains()"
+        - "assertURLContains()"
+        - "assertPageTitle()"
+        - "assertElementCount()"
+        - "assertMultipleElementsVisible()"
+        - "assertElementHasClass()"
+    
+    - name: "WaitHelpers"
+      file: "tests/helpers/wait-helpers.ts"
+      methods:
+        - "waitForTextToContain()"
+        - "waitForTextToChange()"
+        - "waitForNewPage()"
+        - "waitForElementToBeRemoved()"
+        - "waitForAttributeValue()"
+        - "waitForMultipleElements()"
+    
+    - name: "DataHelpers"
+      file: "tests/helpers/data-helpers.ts"
+      methods:
+        - "loadTestData()"
+        - "generateRandomString()"
+        - "generateRandomEmail()"
+        - "generateUniqueId()"
+        - "getCurrentDate()"
+        - "getCurrentTimestamp()"
+        - "generateRandomNumber()"
+        - "selectRandomItem()"
+        - "deepClone()"
+        - "mergeObjects()"
+
+  test_data:
+    - name: "test-data.json"
+      file: "tests/data/test-data.json"
+      content:
+        - "Page content (titles, descriptions)"
+        - "Button labels"
+        - "Connection result messages"
+        - "Expected element counts"
+    
+    - name: "external-links.json"
+      file: "tests/data/external-links.json"
+      content:
+        - "YouTube channel URLs"
+        - "GitHub repository URLs"
+        - "LinkedIn profile URLs"
+        - "Domain names"
+
+  documentation:
+    - name: "README-TESTING.md"
+      description: "Comprehensive testing guide with helper examples"
+    - name: "CONTRIBUTING-TESTS.md"
+      description: "Contribution guidelines for test development"
+    - name: "DEBUGGING-GUIDE.md"
+      description: "Debugging strategies and troubleshooting"
+    - name: "TEST-STRATEGY.md"
+      description: "Overall test strategy and approach"
+    - name: "test-coverage-matrix.md"
+      description: "Detailed test coverage matrix"
+
+  quality_standards:
+    locator_strategy:
+      priority:
+        1: "data-testid"
+        2: "Role-based"
+        3: "Unique text"
+        4: "CSS with unique attributes"
+      forbidden:
+        - "xpath"
+        - "nth-child"
+    
+    code_standards:
+      - "TypeScript strict mode"
+      - "ESLint configured"
+      - "Prettier formatting"
+      - "JSDoc comments"
+      - "Page Object Model"
+      - "Helper utilities usage"
+    
+    test_standards:
+      - "AAA pattern (Arrange-Act-Assert)"
+      - "Descriptive test names"
+      - "Test data in JSON files"
+      - "No hardcoded values"
+      - "Proper error handling"
+
+  execution_commands:
+    local:
+      - command: "npm run test"
+        description: "Run all tests"
+      - command: "npm run test:headed"
+        description: "Run tests in headed mode"
+      - command: "npm run test:ui"
+        description: "Run tests with UI mode"
+      - command: "npm run test:debug"
+        description: "Run tests in debug mode"
+      - command: "npm run test:chromium"
+        description: "Run tests on Chromium only"
+      - command: "npm run test:firefox"
+        description: "Run tests on Firefox only"
+      - command: "npm run test:webkit"
+        description: "Run tests on WebKit only"
+      - command: "npm run test:staging"
+        description: "Run tests on staging environment"
+      - command: "npm run test:prod"
+        description: "Run tests on production environment"
+      - command: "npm run test:report"
+        description: "View test report"
+
+  success_metrics:
+    pass_rate_first_run: "≥ 95%"
+    pass_rate_with_retries: "100%"
+    execution_time: "< 5 minutes"
+    browser_coverage: "All 3 browsers pass"
+    code_quality: "No ESLint errors"
+    documentation: "Comprehensive guides available"
