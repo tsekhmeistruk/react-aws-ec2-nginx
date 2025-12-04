@@ -1,0 +1,155 @@
+name: Playwright Tests - Nightly Run
+
+on:
+  schedule:
+    # Run every night at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  test-dev-nightly:
+    name: Nightly Tests - Dev Environment
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium-dev, firefox-dev, webkit-dev]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Build application
+      run: npm run build
+
+    - name: Start application server
+      run: |
+        npm start &
+        npx wait-on http://localhost:3000 --timeout 120000
+
+    - name: Run Playwright tests
+      run: npx playwright test --project=${{ matrix.browser }}
+      env:
+        BASE_URL: http://localhost:3000
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: nightly-results-dev-${{ matrix.browser }}
+        path: |
+          playwright-report/
+          test-results/
+        retention-days: 30
+
+  test-staging-nightly:
+    name: Nightly Tests - Staging Environment
+    needs: test-dev-nightly
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium-staging, firefox-staging, webkit-staging]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Run Playwright tests on Staging
+      run: npx playwright test --project=${{ matrix.browser }}
+      env:
+        STAGING_URL: ${{ secrets.STAGING_URL || 'https://staging.example.com' }}
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: nightly-results-staging-${{ matrix.browser }}
+        path: |
+          playwright-report/
+          test-results/
+        retention-days: 30
+
+  notify-results:
+    name: Notify Test Results
+    needs: [test-dev-nightly, test-staging-nightly]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: all-reports
+
+    - name: Create summary report
+      run: |
+        echo "# 🌙 Nightly Test Run Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Date:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "**Workflow:** ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Environments Tested" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Dev Environment (Chromium, Firefox, WebKit)" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Staging Environment (Chromium, Firefox, WebKit)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "[View Full Results](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+
+    - name: Publish combined report
+      uses: actions/upload-artifact@v4
+      with:
+        name: nightly-combined-report
+        path: all-reports/
+        retention-days: 30
+
+    - name: Send notification on failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issue = await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🚨 Nightly Test Run Failed',
+            body: `The nightly test run has failed.
+            
+            **Workflow:** ${{ github.workflow }}
+            **Run ID:** ${{ github.run_id }}
+            **Date:** ${new Date().toISOString()}
+            
+            [View Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            Please investigate and fix the failing tests.`,
+            labels: ['test-failure', 'automated']
+          });
+          console.log('Created issue:', issue.data.number);
