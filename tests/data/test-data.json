@@ -1,0 +1,26 @@
+{
+  "pageContent": {
+    "headerTitle": "Welcome to CodeWithMuh Youtube Channel!",
+    "videoDescription": "You are watching my latest video on AWS EC2.",
+    "linkedInGameTitle": "LinkedIn Connection Game",
+    "linkedInGameDescription": "Are you connected with me on LinkedIn?",
+    "footerCopyright": "© 2024 CodeWithMuh"
+  },
+  "buttons": {
+    "checkConnection": "Check Connection",
+    "subscribe": "Subscribe to my channel",
+    "githubRepo": "Github Repo"
+  },
+  "connectionResults": {
+    "connected": "Yes, you are connected with me on LinkedIn!",
+    "notConnected": "No, you are not connected with me on LinkedIn. Connect now:",
+    "linkedInProfileText": "Follow me on LinkedIn"
+  },
+  "expectedElements": {
+    "totalButtons": 3,
+    "hasReactLogo": true,
+    "hasYouTubeEmbed": true,
+    "hasHeader": true,
+    "hasFooter": true
+  }
+}
