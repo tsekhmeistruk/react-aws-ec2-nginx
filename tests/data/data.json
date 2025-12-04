@@ -1,0 +1,44 @@
+{
+  "app": {
+    "title": "Subscribe CodeWithMuh",
+    "heading": "Welcome to CodeWithMuh Youtube Channel!",
+    "videoDescription": "You are watching my latest video on AWS EC2.",
+    "footer": "© 2024 CodeWithMuh"
+  },
+  "buttons": {
+    "checkConnection": "Check Connection",
+    "subscribe": "Subscribe to my channel",
+    "githubRepo": "Github Repo"
+  },
+  "linkedIn": {
+    "question": "Are you connected with me on LinkedIn?",
+    "heading": "LinkedIn Connection Game",
+    "notConnectedMessage": "No, you are not connected with me on LinkedIn.",
+    "connectedMessage": "Yes, you are connected with me on LinkedIn!"
+  },
+  "urls": {
+    "dev": {
+      "base": "http://localhost:3000",
+      "youtube": "https://youtube.com/@codewithmuh?sub_confirmation=1",
+      "github": "https://github.com/codewithmuh/react-aws-ec2-nginx.git",
+      "linkedIn": "https://www.linkedin.com/in/muhammad-rashid-daha/"
+    },
+    "staging": {
+      "base": "https://staging.example.com",
+      "youtube": "https://youtube.com/@codewithmuh?sub_confirmation=1",
+      "github": "https://github.com/codewithmuh/react-aws-ec2-nginx.git",
+      "linkedIn": "https://www.linkedin.com/in/muhammad-rashid-daha/"
+    }
+  },
+  "selectors": {
+    "logo": ".App-logo",
+    "header": "header h1",
+    "videoIframe": "iframe[src*='youtube.com']",
+    "videoDescription": "main p",
+    "linkedInHeading": "main h2",
+    "linkedInQuestion": "main p",
+    "checkConnectionButton": "button",
+    "resultParagraph": "#result",
+    "footer": "footer p"
+  }
+}
