@@ -1,0 +1,22 @@
+{
+  "youtubeChannel": {
+    "subscriptionUrl": "https://youtube.com/@codewithmuh?sub_confirmation=1",
+    "channelName": "@codewithmuh",
+    "embedVideoId": "Xn3Xj9Trepc",
+    "embedUrl": "https://www.youtube.com/embed/Xn3Xj9Trepc"
+  },
+  "github": {
+    "repositoryUrl": "https://github.com/codewithmuh/react-aws-ec2-nginx.git",
+    "owner": "codewithmuh",
+    "repoName": "react-aws-ec2-nginx"
+  },
+  "linkedIn": {
+    "profileUrl": "https://www.linkedin.com/in/muhammad-rashid-daha/",
+    "profileName": "muhammad-rashid-daha"
+  },
+  "domains": {
+    "youtube": "youtube.com",
+    "github": "github.com",
+    "linkedIn": "linkedin.com"
+  }
+}
